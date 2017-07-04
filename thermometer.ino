@@ -4,6 +4,10 @@
 #include <TM1637Display.h>
 #include <AD770X.h>
 
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+#define DS18B20_PIN 4
 #define DISPLAY_CLK_PIN 2
 #define DISPLAY_DIO_PIN 3
 #define DISPLAY_BRTHNSS 0xC
@@ -20,6 +24,8 @@ uint8_t display_data[] = {0, 0, 0, 0};
 
 AD770X ad7705(2.5);
 TM1637Display display(DISPLAY_CLK_PIN, DISPLAY_DIO_PIN);
+OneWire ds18b20_1w(DS18B20_PIN);
+DallasTemperature ds18b20(&ds18b20_1w);
 
 uint16_t v;
 uint16_t t;
@@ -67,11 +73,15 @@ void setup() {
               AD770X::BIPOLAR,
               AD770X::GAIN_64,
               AD770X::UPDATE_RATE_20);
+
+  ds18b20.begin();
 }
 
 void loop() {
+  ds18b20.requestTemperatures();
   v = ad7705.readADResultRaw(AD770X::CHN_AIN1);
-  t = find_t(v, 0, TNN_TABLE_SIZE - 1);
+  t = find_t(v, 0, TNN_TABLE_SIZE - 1) +
+        (uint16_t) (ds18b20.getTempCByIndex(0) * 10);
 
   if (t < 10000) {
     display_data[3] = display.encodeDigit(t % 10);
