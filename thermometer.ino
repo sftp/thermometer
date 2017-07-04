@@ -24,7 +24,7 @@ TM1637Display display(DISPLAY_CLK_PIN, DISPLAY_DIO_PIN);
 uint16_t v;
 uint16_t t;
 
-short int find_t(uint16_t x, uint16_t a, uint16_t b)
+uint16_t find_t(uint16_t x, uint16_t a, uint16_t b)
 {
   uint16_t i;
   uint16_t left;
