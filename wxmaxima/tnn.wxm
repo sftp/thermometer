@@ -55,8 +55,9 @@ t_max : 1300;
 /* [wxMaxima: input   start ] */
 file_output_append : false$
 with_stdout("../tnn.h", printf(true, ""))$
-with_stdout("../tnn.h", printf(true, "const uint16_t TNN[~d] PROGMEM = {~%", floor(t_max) * 10 + 1))$
+with_stdout("../tnn.h", printf(true, "#define TNN_TABLE_SIZE ~d~%~%", floor(t_max) * 10 + 1))$
 file_output_append : true$
+with_stdout("../tnn.h", printf(true, "const uint16_t TNN[~d] PROGMEM = {~%", floor(t_max) * 10 + 1))$
 
 for i from 0 thru floor(t_max) step 0.1 do (
     with_stdout("../tnn.h", printf(true, "  ~d,~%", floor(ADC(i))))

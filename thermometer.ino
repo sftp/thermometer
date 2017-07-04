@@ -71,7 +71,7 @@ void setup() {
 
 void loop() {
   v = ad7705.readADResultRaw(AD770X::CHN_AIN1);
-  t = find_t(v, 0, 13030);
+  t = find_t(v, 0, TNN_TABLE_SIZE - 1);
 
   if (t < 10000) {
     display_data[3] = display.encodeDigit(t % 10);
