@@ -21,6 +21,10 @@ A(t) := (
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
+wxplot2d(A(x), [x, 0, t_max]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
 t_max : 1300;
 /* [wxMaxima: input   end   ] */
 
