@@ -32,9 +32,9 @@ uint16_t t;
 
 uint16_t find_t(uint16_t x, uint16_t a, uint16_t b)
 {
-  uint16_t i;
-  uint16_t left;
-  uint16_t right;
+  uint16_t ret;
+  uint32_t left;
+  uint32_t right;
   uint8_t found = 0;
 
   if (x >= pgm_read_word_near(TNN + b)) {
@@ -42,25 +42,26 @@ uint16_t find_t(uint16_t x, uint16_t a, uint16_t b)
   }
 
   while (!found) {
-    i = (a + b) / 2;
-    left = pgm_read_word_near(TNN + i);
-    right = pgm_read_word_near(TNN + i + 1);
+    ret = (a + b) / 2;
+    left = pgm_read_word_near(TNN + ret);
+    right = pgm_read_word_near(TNN + ret + 1);
 
     if (x >= left && right > x) {
       found = 1;
+      ret = (10 * (a * (right - x)  + b * (x - left))) / (right - left);
       break;
     }
 
     if (x >= right) {
-      a = i + 1;
+      a = ret + 1;
     }
 
     if (x < left) {
-      b = i;
+      b = ret;
     }
   }
 
-  return i;
+  return ret;
 }
 
 void setup() {
