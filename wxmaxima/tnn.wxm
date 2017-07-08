@@ -49,7 +49,7 @@ ADC(t) := (A(t) * Gain * Res) / (2 * Vref);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-wxplot2d(ADC(x), [x, 0, 1300]);
+wxplot2d(ADC(x), [x, 0, t_max]);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
