@@ -33,8 +33,8 @@ uint16_t t;
 uint16_t find_t(uint16_t x, uint16_t a, uint16_t b)
 {
   uint16_t ret;
-  uint32_t left;
-  uint32_t right;
+  uint16_t left;
+  uint16_t right;
   uint8_t found = 0;
 
   if (x >= pgm_read_word_near(TNN + b)) {
@@ -48,7 +48,7 @@ uint16_t find_t(uint16_t x, uint16_t a, uint16_t b)
 
     if (x >= left && right > x) {
       found = 1;
-      ret = (10 * (a * (right - x)  + b * (x - left))) / (right - left);
+      ret = 10 * a + (10 * (x - left) * (b - a)) / (right - left);
       break;
     }
 
