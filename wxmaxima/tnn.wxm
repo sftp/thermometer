@@ -1,5 +1,5 @@
 /* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
-/* [ Created with wxMaxima version 16.04.2 ] */
+/* [ Created with wxMaxima version 13.04.2 ] */
 
 /* [wxMaxima: comment start ]
 GOST R 8.585 - 2001
@@ -61,7 +61,7 @@ file_output_append : false$
 with_stdout("../tnn.h", printf(true, ""))$
 with_stdout("../tnn.h", printf(true, "#define TNN_TABLE_SIZE ~d~%~%", t_max + 1))$
 file_output_append : true$
-with_stdout("../tnn.h", printf(true, "const uint16_t TNN[~d] PROGMEM = {~%", t_max + 1))$
+with_stdout("../tnn.h", printf(true, "const uint16_t TNN[TNN_TABLE_SIZE] PROGMEM = {~%"))$
 
 for i from 0 thru t_max step 1 do (
     with_stdout("../tnn.h", printf(true, "  ~d,~%", floor(ADC(i))))

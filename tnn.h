@@ -1,6 +1,6 @@
 #define TNN_TABLE_SIZE 1301
 
-const uint16_t TNN[1301] PROGMEM = {
+const uint16_t TNN[TNN_TABLE_SIZE] PROGMEM = {
   0,
   21,
   43,
