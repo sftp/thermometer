@@ -9,13 +9,11 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-uint8_t display_nodata[] =
+uint8_t display_data[] =
   {DISPLAY_MINUS_SYMB ^ DISPLAY_DOT_SYMB,
    DISPLAY_MINUS_SYMB ^ DISPLAY_DOT_SYMB,
    DISPLAY_MINUS_SYMB ^ DISPLAY_DOT_SYMB,
    DISPLAY_MINUS_SYMB ^ DISPLAY_DOT_SYMB};
-
-uint8_t display_data[] = {0, 0, 0, 0};
 
 AD770X ad7705(2.5);
 TM1637Display display(DISPLAY_CLK_PIN, DISPLAY_DIO_PIN);
@@ -61,7 +59,7 @@ uint16_t find_t(uint16_t x, uint16_t a, uint16_t b)
 
 void setup() {
   display.setBrightness(DISPLAY_BRTHNSS);
-  display.setSegments(display_nodata);
+  display.setSegments(display_data);
 
   ad7705.reset();
   ad7705.init(AD7705_CHN,
