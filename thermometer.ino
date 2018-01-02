@@ -1,18 +1,13 @@
 #include <avr/pgmspace.h>
+
 #include "tnn.h"
+#include "config.h"
 
 #include <TM1637Display.h>
 #include <AD770X.h>
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
-
-#define DS18B20_PIN 4
-#define DISPLAY_CLK_PIN 2
-#define DISPLAY_DIO_PIN 3
-#define DISPLAY_BRTHNSS 0xC
-#define DISPLAY_DOT_SYMB (1<<7)
-#define DISPLAY_MINUS_SYMB (1<<6)
 
 uint8_t display_nodata[] =
   {DISPLAY_MINUS_SYMB ^ DISPLAY_DOT_SYMB,
@@ -69,18 +64,18 @@ void setup() {
   display.setSegments(display_nodata);
 
   ad7705.reset();
-  ad7705.init(AD770X::CHN_AIN1,
-              AD770X::CLK_DIV_1,
-              AD770X::BIPOLAR,
-              AD770X::GAIN_64,
-              AD770X::UPDATE_RATE_20);
+  ad7705.init(AD7705_CHN,
+              AD7705_CLK_DIV,
+              AD7705_MODE,
+              AD7705_GAIN,
+              AD7705_UPDATE_RATE);
 
   ds18b20.begin();
 }
 
 void loop() {
   ds18b20.requestTemperatures();
-  v = ad7705.readADResultRaw(AD770X::CHN_AIN1);
+  v = ad7705.readADResultRaw(AD7705_CHN);
   t = find_t(v, 0, TNN_TABLE_SIZE - 1) +
         (uint16_t) (ds18b20.getTempCByIndex(0) * 10);
 
