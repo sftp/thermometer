@@ -8,20 +8,18 @@ GOST R 8.585 - 2001
 /* [wxMaxima: input   start ] */
 A(t) := (
       0
-    + 2.5929394601 * 10^-2  * t^1
-    + 1.5710141880 * 10^-5  * t^2
-    + 4.3825627237 * 10^-8  * t^3
-    - 2.5261169794 * 10^-10 * t^4
-    + 6.4311819339 * 10^-13 * t^5
-    - 1.0063471519 * 10^-15 * t^6
-    + 9.9745338992 * 10^-19 * t^7
-    - 6.0863245607 * 10^-22 * t^8
-    + 2.0849229339 * 10^-25 * t^9
-    - 3.0682196151 * 10^-29 * t^10 ) * 10^-3;
+    + 5.40313308631 * 10^-3  * t^1
+    + 1.25934289740 * 10^-5  * t^2
+    - 2.32477968689 * 10^-8  * t^3
+    + 3.22028823036 * 10^-11 * t^4
+    - 3.31465196389 * 10^-14 * t^5
+    + 2.55744251786 * 10^-17 * t^6
+    - 1.25068871393 * 10^-20 * t^7
+    + 2.71443176145 * 10^-24 * t^8 ) * 10^-3;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-t_max : 1300;
+t_max : 1064.18;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
@@ -29,7 +27,7 @@ wxplot2d(A(x), [x, 0, t_max]);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-Gain : 64;
+Gain : 128;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
@@ -58,16 +56,16 @@ wxplot2d(ADC(x), [x, 0, t_max]);
 
 /* [wxMaxima: input   start ] */
 file_output_append : false$
-with_stdout("../tnn.h", printf(true, ""))$
-with_stdout("../tnn.h", printf(true, "#define TABLE_SIZE ~d~%~%", t_max + 1))$
+with_stdout("../ts.h", printf(true, ""))$
+with_stdout("../ts.h", printf(true, "#define TABLE_SIZE ~d~%~%", t_max + 1))$
 file_output_append : true$
-with_stdout("../tnn.h", printf(true, "const uint16_t TABLE[TABLE_SIZE] PROGMEM = {~%"))$
+with_stdout("../ts.h", printf(true, "const uint16_t TABLE[TABLE_SIZE] PROGMEM = {~%"))$
 
 for i from 0 thru t_max step 1 do (
-    with_stdout("../tnn.h", printf(true, "  ~d,~%", floor(ADC(i))))
+    with_stdout("../ts.h", printf(true, "  ~d,~%", floor(ADC(i))))
 );
 
-with_stdout("../tnn.h", printf(true, "};~%"))$
+with_stdout("../ts.h", printf(true, "};~%"))$
 /* [wxMaxima: input   end   ] */
 
 /* Maxima can't load/batch files which end with a comment! */

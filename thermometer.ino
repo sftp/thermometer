@@ -1,7 +1,7 @@
 #include <avr/pgmspace.h>
 
-#include "tnn.h"
 #include "config.h"
+
 
 #include <TM1637Display.h>
 #include <AD770X.h>
@@ -30,14 +30,14 @@ uint16_t find_t(uint16_t x, uint16_t a, uint16_t b)
   uint16_t right;
   uint8_t found = 0;
 
-  if (x >= pgm_read_word_near(TNN + b)) {
+  if (x >= pgm_read_word_near(TABLE + b)) {
     return b;
   }
 
   while (!found) {
     ret = (a + b) / 2;
-    left = pgm_read_word_near(TNN + ret);
-    right = pgm_read_word_near(TNN + ret + 1);
+    left = pgm_read_word_near(TABLE + ret);
+    right = pgm_read_word_near(TABLE + ret + 1);
 
     if (x >= left && right > x) {
       found = 1;
@@ -74,7 +74,7 @@ void setup() {
 void loop() {
   ds18b20.requestTemperatures();
   v = ad7705.readADResultRaw(AD7705_CHN);
-  t = find_t(v, 0, TNN_TABLE_SIZE - 1) +
+  t = find_t(v, 0, TABLE_SIZE - 1) +
         (uint16_t) (ds18b20.getTempCByIndex(0) * 10);
 
   if (t < 10000) {
