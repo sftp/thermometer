@@ -21,7 +21,7 @@ OneWire ds18b20_1w(DS18B20_PIN);
 DallasTemperature ds18b20(&ds18b20_1w);
 
 uint16_t v;
-uint16_t t;
+int16_t t;
 
 uint16_t find_t(uint16_t x, uint16_t a, uint16_t b)
 {
@@ -72,21 +72,29 @@ void setup() {
 }
 
 void loop() {
+  uint8_t neg[2] = {0, 0};
+
   ds18b20.requestTemperatures();
   v = ad7705.readADResultRaw(AD7705_CHN);
   t = find_t(v, 0, TABLE_SIZE - 1) +
-        (uint16_t) (ds18b20.getTempCByIndex(0) * 10);
+	ds18b20.getTempCByIndex(0) * 10;
 
-  if (t < 10000) {
+  if (t < 0) {
+    neg[0] = DISPLAY_MINUS_SYMB;
+    neg[1] = DISPLAY_MINUS_SYMB;
+    t = -t;
+  }
+
+  if ((t < 10000 && !neg[0]) || t < 1000) {
     display_data[3] = display.encodeDigit(t % 10);
     display_data[2] = t >=    1 ? display.encodeDigit((t /   10) % 10) ^ DISPLAY_DOT_SYMB : 0;
-    display_data[1] = t >=  100 ? display.encodeDigit((t /  100) % 10) : 0;
-    display_data[0] = t >= 1000 ? display.encodeDigit((t / 1000) % 10) : 0;
+    display_data[1] = t >=  100 ? display.encodeDigit((t /  100) % 10) : 0 ^ (neg[0] = 0, neg[1]);
+    display_data[0] = t >= 1000 ? display.encodeDigit((t / 1000) % 10) : 0 ^ neg[0];
   } else {
     display_data[3] = display.encodeDigit((t /    10) % 10);
     display_data[2] = display.encodeDigit((t /   100) % 10);
-    display_data[1] = display.encodeDigit((t /  1000) % 10);
-    display_data[0] = display.encodeDigit((t / 10000) % 10);
+    display_data[1] = t >=  1000 ? display.encodeDigit((t /  1000) % 10) : 0 ^ (neg[0] = 0, neg[1]);
+    display_data[0] = t >= 10000 ? display.encodeDigit((t / 10000) % 10) : 0 ^ neg[0];
   }
 
   display.setSegments(display_data);
