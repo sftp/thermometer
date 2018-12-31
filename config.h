@@ -19,8 +19,8 @@
 
 #define DS18B20_PIN 4
 
-#define DISPLAY_CLK_PIN 2
-#define DISPLAY_DIO_PIN 3
+#define DISPLAY_CLK_PIN A5
+#define DISPLAY_DIO_PIN A4
 #define DISPLAY_BRTHNSS 0xC
 #define DISPLAY_DOT_SYMB (1<<7)
 #define DISPLAY_MINUS_SYMB (1<<6)
