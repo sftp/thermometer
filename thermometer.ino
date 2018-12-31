@@ -99,5 +99,5 @@ void loop() {
 
   display.setSegments(display_data);
 
-  delay(100);
+  delay(CYCLE_DELAY_MS);
 }

@@ -25,3 +25,4 @@
 #define DISPLAY_DOT_SYMB (1<<7)
 #define DISPLAY_MINUS_SYMB (1<<6)
 
+#define CYCLE_DELAY_MS 100
