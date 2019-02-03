@@ -8,9 +8,9 @@
 #define TC_GAIN_128 AD770X::GAIN_128
 
 #if TYPE == 0
-  #include "tnn.h"
+  #include "tc_n_rev.h"
 #elif TYPE == 1
-  #include "ts.h"
+  #include "ts_n_rev.h"
 #endif
 
 #define AD7705_GAIN TC_GAIN
