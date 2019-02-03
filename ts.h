@@ -1,4 +1,5 @@
 #define TABLE_SIZE 1769
+#define TC_GAIN TC_GAIN_128
 
 const uint16_t TABLE[TABLE_SIZE] PROGMEM = {
   0,

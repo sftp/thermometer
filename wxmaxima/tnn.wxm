@@ -1,9 +1,9 @@
 /* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
-/* [ Created with wxMaxima version 16.04.2 ] */
-
+/* [ Created with wxMaxima version 18.02.0 ] */
 /* [wxMaxima: comment start ]
 GOST R 8.585 - 2001
    [wxMaxima: comment end   ] */
+
 
 /* [wxMaxima: input   start ] */
 A(t) := (
@@ -20,49 +20,60 @@ A(t) := (
     - 3.0682196151 * 10^-29 * t^10 ) * 10^-3;
 /* [wxMaxima: input   end   ] */
 
+
 /* [wxMaxima: input   start ] */
 t_max : 1300;
 /* [wxMaxima: input   end   ] */
+
 
 /* [wxMaxima: input   start ] */
 wxplot2d(A(x), [x, 0, t_max]);
 /* [wxMaxima: input   end   ] */
 
+
 /* [wxMaxima: input   start ] */
 Gain : 64;
 /* [wxMaxima: input   end   ] */
+
 
 /* [wxMaxima: input   start ] */
 Vref : 2.5;
 /* [wxMaxima: input   end   ] */
 
+
 /* [wxMaxima: input   start ] */
 V_max : Vref / Gain, numer;
 /* [wxMaxima: input   end   ] */
+
 
 /* [wxMaxima: input   start ] */
 Res : 2^16;
 /* [wxMaxima: input   end   ] */
 
+
 /* [wxMaxima: comment start ]
 (2 * Vref) for bipolar mode
    [wxMaxima: comment end   ] */
+
 
 /* [wxMaxima: input   start ] */
 ADC(t) := (A(t) * Gain * Res) / (2 * Vref);
 /* [wxMaxima: input   end   ] */
 
+
 /* [wxMaxima: input   start ] */
 wxplot2d(ADC(x), [x, 0, t_max]);
 /* [wxMaxima: input   end   ] */
 
+
 /* [wxMaxima: input   start ] */
 file_output_append : false$
 with_stdout("../tnn.h", printf(true, ""))$
-with_stdout("../tnn.h", printf(true, "#define TABLE_SIZE ~d~%~%", t_max + 1))$
+with_stdout("../tnn.h", printf(true, "#define TABLE_SIZE ~d~%", t_max + 1))$
 file_output_append : true$
-with_stdout("../tnn.h", printf(true, "const uint16_t TABLE[TABLE_SIZE] PROGMEM = {~%"))$
+with_stdout("../tnn.h", printf(true, "#define TC_GAIN TC_GAIN_~d~%~%", Gain))$
 
+with_stdout("../tnn.h", printf(true, "const uint16_t TABLE[TABLE_SIZE] PROGMEM = {~%"))$
 for i from 0 thru t_max step 1 do (
     with_stdout("../tnn.h", printf(true, "  ~d,~%", floor(ADC(i))))
 );
@@ -70,5 +81,7 @@ for i from 0 thru t_max step 1 do (
 with_stdout("../tnn.h", printf(true, "};~%"))$
 /* [wxMaxima: input   end   ] */
 
-/* Maxima can't load/batch files which end with a comment! */
-"Created with wxMaxima"$
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 18.02.0"$

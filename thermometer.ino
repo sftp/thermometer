@@ -1,7 +1,7 @@
 #include <avr/pgmspace.h>
 
 #include "config.h"
-
+#include "tc.h"
 
 #include <TM1637Display.h>
 #include <AD770X.h>

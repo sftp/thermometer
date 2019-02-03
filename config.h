@@ -4,14 +4,6 @@
  */
 #define TYPE 0
 
-#if TYPE == 0
-  #include "tnn.h"
-  #define AD7705_GAIN        AD770X::GAIN_64
-#elif TYPE == 1
-  #include "ts.h"
-  #define AD7705_GAIN        AD770X::GAIN_128
-#endif
-
 #define AD7705_CHN         AD770X::CHN_AIN1
 #define AD7705_CLK_DIV     AD770X::CLK_DIV_1
 #define AD7705_MODE        AD770X::BIPOLAR
