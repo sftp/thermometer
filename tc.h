@@ -10,7 +10,7 @@
 #if TYPE == 0
   #include "tc_n_rev.h"
 #elif TYPE == 1
-  #include "ts_n_rev.h"
+  #include "tc_s_rev.h"
 #endif
 
 #define AD7705_GAIN TC_GAIN
