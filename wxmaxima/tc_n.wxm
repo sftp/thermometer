@@ -78,7 +78,7 @@ wxplot2d(temp(x), [x, 0, ADC_max]);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-Step : floor(ADC_max / 1300);
+Step : floor(ADC_max / t_max);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
