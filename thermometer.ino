@@ -20,44 +20,55 @@ TM1637Display display(DISPLAY_CLK_PIN, DISPLAY_DIO_PIN);
 OneWire ds18b20_1w(DS18B20_PIN);
 DallasTemperature ds18b20(&ds18b20_1w);
 
-uint16_t v;
+uint16_t adc;
 int16_t t;
 
-uint16_t find_t(uint16_t x, uint16_t a, uint16_t b)
+uint16_t find_t(uint16_t x)
 {
-  uint16_t ret;
+  uint16_t a;
+  uint16_t b;
   uint16_t left;
   uint16_t right;
-  uint8_t found = 0;
+  uint16_t pos;
+  uint16_t ret;
 
-  if (x >= pgm_read_word_near(TABLE + b)) {
-    return b;
+  pos = x / TABLE_STEP;
+
+  if (pos >= TABLE_SIZE) {
+    return pgm_read_word_near(TABLE + TABLE_SIZE);
   }
 
-  while (!found) {
-    ret = (a + b) / 2;
-    left = pgm_read_word_near(TABLE + ret);
-    right = pgm_read_word_near(TABLE + ret + 1);
+  a = pgm_read_word_near(TABLE + pos);
+  b = pgm_read_word_near(TABLE + pos + 1);
+  left = pos * TABLE_STEP;
+  right = (pos + 1) * TABLE_STEP;
 
-    if (x >= left && right > x) {
-      found = 1;
-      ret = 10 * a + (10 * (x - left) * (b - a)) / (right - left);
-      break;
-    }
+  ret = a + ((x - left) * (b - a)) / (right - left);
 
-    if (x >= right) {
-      a = ret + 1;
-    }
-
-    if (x < left) {
-      b = ret;
-    }
-  }
+#if DEBUG == 1
+  Serial.print("adc = ");
+  Serial.print(x);
+  Serial.print("\ta = ");
+  Serial.print(a);
+  Serial.print("\tb = ");
+  Serial.print(b);
+  Serial.print("\tleft = ");
+  Serial.print(left);
+  Serial.print("\tright = ");
+  Serial.print(right);
+  Serial.print("\tt = ");
+  Serial.println(ret / 10.0);
+#endif
 
   return ret;
 }
 
 void setup() {
+
+#if DEBUG == 1
+  Serial.begin(9600);
+#endif
+
   display.setBrightness(DISPLAY_BRTHNSS);
   display.setSegments(display_data);
 
@@ -75,9 +86,8 @@ void loop() {
   uint8_t neg[2] = {0, 0};
 
   ds18b20.requestTemperatures();
-  v = ad7705.readADResultRaw(AD7705_CHN);
-  t = find_t(v, 0, TABLE_SIZE - 1) +
-	ds18b20.getTempCByIndex(0) * 10;
+  adc = ad7705.readADResultRaw(AD7705_CHN);
+  t = find_t(adc) + ds18b20.getTempCByIndex(0) * 10;
 
   if (t < 0) {
     neg[0] = DISPLAY_MINUS_SYMB;
