@@ -1,0 +1,109 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: comment start ]
+GOST R 8.585 - 2001
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+t(mV) := (
+  if mV >= -3.990 and mV <= 0 then
+      0
+    + 3.8436847 *  10^1  * mV^1
+    + 1.1010485 *  10^0  * mV^2
+    + 5.2229312 *  10^0  * mV^3
+    + 7.2060525 *  10^0  * mV^4
+    + 5.8488586 *  10^0  * mV^5
+    + 2.7754916 *  10^0  * mV^6
+    + 7.7075166 *  10^-1 * mV^7
+    + 1.1582665 *  10^-1 * mV^8
+    + 7.3138868 *  10^-1 * mV^9
+  else if mV > 0 and mV <= 20.613 then
+      0
+    + 3.86896   *  10^1  * mV^1
+    - 1.08267   *  10^0  * mV^2
+    + 4.70205   *  10^-2 * mV^3
+    - 2.12169   *  10^-6 * mV^4
+    - 1.17272   *  10^-4 * mV^5
+    + 5.39280   *  10^-6 * mV^6
+    - 7.98156   *  10^-8 * mV^7
+  else if mV > 20.613 and mV <= 47.513 then
+      1.972485  *  10^1  * mV^0
+    + 3.300943  *  10^1  * mV^1
+    - 3.915159  *  10^-1 * mV^2
+    + 9.855391  *  10^-3 * mV^3
+    - 1.274371  *  10^-4 * mV^4
+    + 7.767022  *  10^-7 * mV^5
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+mV_max : 47.513;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+t_max : 1300;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(t(x), [x, 0, mV_max]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Gain : 64;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Vref : 2.5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Res : 2^16;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+(2 * Vref) for bipolar mode
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+temp(ADC) := t((ADC * 1000 * 2 * Vref) / (Res * Gain));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ADC_max : floor((mV_max * Gain * Res ) / (1000 * Vref * 2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(temp(x), [x, 0, ADC_max]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Step : floor(ADC_max / 1300);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Size : ceiling (ADC_max / Step);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+file_output_append : false$
+with_stdout("../tc_n.h", printf(true, ""))$
+with_stdout("../tc_n.h", printf(true, "#define TABLE_SIZE ~d~%", Size))$
+file_output_append : true$
+with_stdout("../tc_n.h", printf(true, "#define TABLE_STEP ~d~%", Step))$
+with_stdout("../tc_n.h", printf(true, "#define TC_GAIN TC_GAIN_~d~%~%", Gain))$
+
+with_stdout("../tc_n.h", printf(true, "const uint16_t TABLE[TABLE_SIZE] PROGMEM = {~%"))$
+for i from 0 thru ADC_max step Step do (
+    with_stdout("../tc_n.h", printf(true, "  ~d, /* t=~f; mV=~f; ADC=~d */~%",
+             temp(i) * 10,
+             temp(i),
+             i * 1000 * 2 * Vref / Res / Gain,
+             i))
+);
+
+with_stdout("../tc_n.h", printf(true, "};~%"))$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
