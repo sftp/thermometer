@@ -99,15 +99,15 @@ void loop() {
   ds18b20.requestTemperatures();
 #if DS18B20_EXT_PIN
   ds18b20_ext.requestTemperatures();
-  if ((ds18b20_t = ds18b20_ext.getTempCByIndex(0)) == DEVICE_DISCONNECTED_C) {
-    ds18b20_t = ds18b20.getTempCByIndex(0);
+  if ((ds18b20_t = ds18b20_ext.getTempCByIndex(0) * 10) == DEVICE_DISCONNECTED_C * 10) {
+    ds18b20_t = ds18b20.getTempCByIndex(0) * 10;
   }
 #else
-  ds18b20_t = ds18b20.getTempCByIndex(0);
+  ds18b20_t = ds18b20.getTempCByIndex(0) * 10;
 #endif
 
   adc = ad7705.readADResultRaw(AD7705_CHN);
-  t = find_t(adc) + ds18b20_t * 10;
+  t = find_t(adc) + ds18b20_t;
 
   if (t < 0) {
     neg[0] = DISPLAY_MINUS_SYMB;
