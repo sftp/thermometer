@@ -18,6 +18,8 @@ uint8_t display_data[] =
 AD770X ad7705(2.5);
 TM1637Display display(DISPLAY_CLK_PIN, DISPLAY_DIO_PIN);
 
+DeviceAddress ds18b20_addr;
+
 OneWire ds18b20_1w(DS18B20_PIN);
 DallasTemperature ds18b20(&ds18b20_1w);
 
@@ -28,7 +30,7 @@ DallasTemperature ds18b20_ext(&ds18b20_ext_1w);
 
 uint16_t adc;
 int16_t t;
-int16_t ds18b20_t;
+int32_t ds18b20_t;
 
 uint16_t find_t(uint16_t x)
 {
@@ -99,11 +101,15 @@ void loop() {
   ds18b20.requestTemperatures();
 #if DS18B20_EXT_PIN
   ds18b20_ext.requestTemperatures();
-  if ((ds18b20_t = ds18b20_ext.getTempCByIndex(0) * 10) == DEVICE_DISCONNECTED_C * 10) {
-    ds18b20_t = ds18b20.getTempCByIndex(0) * 10;
+  if (ds18b20_ext.getAddress(ds18b20_addr, 0)) {
+    ds18b20_t = (int32_t) ds18b20_ext.getTemp(ds18b20_addr) * 10 / 128;
+  } else {
+    ds18b20.getAddress(ds18b20_addr, 0);
+    ds18b20_t = (int32_t) ds18b20.getTemp(ds18b20_addr) * 10 / 128;
   }
 #else
-  ds18b20_t = ds18b20.getTempCByIndex(0) * 10;
+  ds18b20.getAddress(ds18b20_addr, 0);
+  ds18b20_t = (int32_t) ds18b20.getTemp(ds18b20_addr) * 10 / 128;
 #endif
 
   adc = ad7705.readADResultRaw(AD7705_CHN);
