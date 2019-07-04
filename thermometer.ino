@@ -94,9 +94,9 @@ void setup() {
   ds18b20.setWaitForConversion(false);
 
 #if DS18B20_EXT_PIN
-    ds18b20_ext.begin();
-    ds18b20_ext.requestTemperatures();
-    ds18b20_ext.setWaitForConversion(false);
+  ds18b20_ext.begin();
+  ds18b20_ext.requestTemperatures();
+  ds18b20_ext.setWaitForConversion(false);
 #endif
 }
 
