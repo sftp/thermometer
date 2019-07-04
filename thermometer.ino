@@ -90,11 +90,13 @@ void setup() {
               AD7705_UPDATE_RATE);
 
   ds18b20.begin();
+  ds18b20.setResolution(DS18B20_RESOLUTION);
   ds18b20.requestTemperatures();
   ds18b20.setWaitForConversion(false);
 
 #if DS18B20_EXT_PIN
   ds18b20_ext.begin();
+  ds18b20_ext.setResolution(DS18B20_RESOLUTION);
   ds18b20_ext.requestTemperatures();
   ds18b20_ext.setWaitForConversion(false);
 #endif
