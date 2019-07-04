@@ -1,0 +1,19 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# dm_logo
+#
+DEF dm_logo SYM 0 0 N N 1 F N
+F0 "SYM" 0 -100 50 H I C CNN
+F1 "dm_logo" 0 100 50 H I C CNN
+F2 "dm_logo:dm_logo" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+$FPLIST
+ dm_logo
+$ENDFPLIST
+DRAW
+T 0 0 0 165 0 0 0 DM Normal 1 C C
+ENDDRAW
+ENDDEF
+#
+#End Library
