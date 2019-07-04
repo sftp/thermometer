@@ -20,5 +20,6 @@
 #define DISPLAY_MINUS_SYMB (1<<6)
 
 #define CYCLE_DELAY_MS 100
+#define DS18B20_DELAY_MS 1000
 
 #define DEBUG 0

@@ -28,6 +28,7 @@ OneWire ds18b20_ext_1w(DS18B20_EXT_PIN);
 DallasTemperature ds18b20_ext(&ds18b20_ext_1w);
 #endif
 
+uint32_t ms = 0;
 uint16_t adc;
 int16_t t;
 int32_t ds18b20_t;
@@ -89,28 +90,36 @@ void setup() {
               AD7705_UPDATE_RATE);
 
   ds18b20.begin();
+  ds18b20.requestTemperatures();
+  ds18b20.setWaitForConversion(false);
 
 #if DS18B20_EXT_PIN
     ds18b20_ext.begin();
+    ds18b20_ext.requestTemperatures();
+    ds18b20_ext.setWaitForConversion(false);
 #endif
 }
 
 void loop() {
   uint8_t neg[2] = {0, 0};
 
-  ds18b20.requestTemperatures();
+  if (millis() > ms + DS18B20_DELAY_MS || millis() < ms || !ms) {
 #if DS18B20_EXT_PIN
-  ds18b20_ext.requestTemperatures();
-  if (ds18b20_ext.getAddress(ds18b20_addr, 0)) {
-    ds18b20_t = (int32_t) ds18b20_ext.getTemp(ds18b20_addr) * 10 / 128;
-  } else {
+    if (ds18b20_ext.getAddress(ds18b20_addr, 0)) {
+      ds18b20_t = (int32_t) ds18b20_ext.getTemp(ds18b20_addr) * 10 / 128;
+      ds18b20_ext.requestTemperatures();
+    } else {
+      ds18b20.getAddress(ds18b20_addr, 0);
+      ds18b20_t = (int32_t) ds18b20.getTemp(ds18b20_addr) * 10 / 128;
+      ds18b20.requestTemperatures();
+    }
+#else
     ds18b20.getAddress(ds18b20_addr, 0);
     ds18b20_t = (int32_t) ds18b20.getTemp(ds18b20_addr) * 10 / 128;
-  }
-#else
-  ds18b20.getAddress(ds18b20_addr, 0);
-  ds18b20_t = (int32_t) ds18b20.getTemp(ds18b20_addr) * 10 / 128;
+    ds18b20.requestTemperatures();
 #endif
+    ms = millis();
+  }
 
   adc = ad7705.readADResultRaw(AD7705_CHN);
   t = find_t(adc) + ds18b20_t;
