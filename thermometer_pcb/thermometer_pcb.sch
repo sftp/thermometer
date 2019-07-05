@@ -614,17 +614,6 @@ $EndComp
 Text Label 6550 5350 2    60   ~ 0
 8
 $Comp
-L Connector_Generic:Conn_01x04 J2
-U 1 1 5BB3D784
-P 2950 3950
-F 0 "J2" H 2870 3525 50  0000 C CNN
-F 1 "TC_IN" H 2870 3616 50  0000 C CNN
-F 2 "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_Type055_RT01504HDWU_1x04_P5.00mm_Horizontal" H 2950 3950 50  0001 C CNN
-F 3 "~" H 2950 3950 50  0001 C CNN
-	1    2950 3950
-	-1   0    0    1   
-$EndComp
-$Comp
 L dm_logo:dm_logo SYM1
 U 1 1 5BC24F37
 P 850 1350
@@ -667,5 +656,16 @@ F 2 "" H 8150 4300 50  0001 C CNN
 F 3 "" H 8150 4300 50  0001 C CNN
 	1    8150 4300
 	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x04 J2
+U 1 1 5BB3D784
+P 2950 3850
+F 0 "J2" H 2950 4150 50  0000 C CNN
+F 1 "TC_IN" H 2950 4050 50  0000 C CNN
+F 2 "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_Type055_RT01504HDWU_1x04_P5.00mm_Horizontal" H 2950 3850 50  0001 C CNN
+F 3 "~" H 2950 3850 50  0001 C CNN
+	1    2950 3850
+	-1   0    0    -1  
 $EndComp
 $EndSCHEMATC
