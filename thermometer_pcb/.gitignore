@@ -5,5 +5,6 @@ fp-info-cache
 *-drl_map.ps
 
 *.bak
+*.kicad_pcb-bak
 
 *-cache.lib
