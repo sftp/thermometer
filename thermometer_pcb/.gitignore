@@ -1,5 +1,7 @@
 fp-info-cache
 
+*.gbr
+
 *.bak
 
 *-cache.lib
