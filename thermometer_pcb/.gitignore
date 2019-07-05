@@ -1,6 +1,8 @@
 fp-info-cache
 
 *.gbr
+*.drl
+*-drl_map.ps
 
 *.bak
 
