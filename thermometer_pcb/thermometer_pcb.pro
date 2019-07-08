@@ -1,4 +1,4 @@
-update=Сб 06 июл 2019 01:29:36
+update=Пн 08 июл 2019 03:47:33
 version=1
 last_client=kicad
 [cvpcb]
@@ -26,7 +26,7 @@ LastNetListRead=thermometer_pcb.net
 CopperLayerCount=2
 BoardThickness=1.6
 AllowMicroVias=1
-AllowBlindVias=0
+AllowBlindVias=1
 RequireCourtyardDefinitions=0
 ProhibitOverlappingCourtyards=1
 MinTrackWidth=0.2

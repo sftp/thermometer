@@ -1,4 +1,5 @@
 EESchema Schematic File Version 5
+LIBS:thermometer_pcb-cache
 EELAYER 29 0
 EELAYER END
 $Descr A4 11693 8268
@@ -570,31 +571,13 @@ F 3 "~" H 2850 1550 50  0001 C CNN
 	1    2850 1550
 	0    1    1    0   
 $EndComp
-$Comp
-L Mechanical:MountingHole_Pad H4
-U 1 1 5BB0DACD
-P 2850 1750
-F 0 "H4" V 2804 1900 50  0000 L CNN
-F 1 "MountingHole_Pad" V 2895 1900 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3_ISO14580_Pad" H 2850 1750 50  0001 C CNN
-F 3 "~" H 2850 1750 50  0001 C CNN
-	1    2850 1750
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	2750 1150 2650 1150
 Wire Wire Line
 	2650 1150 2650 1350
 Wire Wire Line
-	2750 1750 2650 1750
-Connection ~ 2650 1750
-Wire Wire Line
-	2650 1750 2650 1900
-Wire Wire Line
 	2750 1550 2650 1550
 Connection ~ 2650 1550
-Wire Wire Line
-	2650 1550 2650 1750
 Wire Wire Line
 	2750 1350 2650 1350
 Connection ~ 2650 1350
@@ -603,12 +586,12 @@ Wire Wire Line
 $Comp
 L power:GND #PWR0101
 U 1 1 5BB1D310
-P 2650 1900
-F 0 "#PWR0101" H 2650 1650 50  0001 C CNN
-F 1 "GND" H 2655 1727 50  0000 C CNN
-F 2 "" H 2650 1900 50  0001 C CNN
-F 3 "" H 2650 1900 50  0001 C CNN
-	1    2650 1900
+P 2650 1800
+F 0 "#PWR0101" H 2650 1550 50  0001 C CNN
+F 1 "GND" H 2655 1627 50  0000 C CNN
+F 2 "" H 2650 1800 50  0001 C CNN
+F 3 "" H 2650 1800 50  0001 C CNN
+	1    2650 1800
 	1    0    0    -1  
 $EndComp
 Text Label 6550 5350 2    60   ~ 0
@@ -668,4 +651,6 @@ F 3 "~" H 2950 3850 50  0001 C CNN
 	1    2950 3850
 	-1   0    0    -1  
 $EndComp
+Wire Wire Line
+	2650 1550 2650 1800
 $EndSCHEMATC
