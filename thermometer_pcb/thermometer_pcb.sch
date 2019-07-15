@@ -653,4 +653,66 @@ F 3 "~" H 2950 3850 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	2650 1550 2650 1800
+$Comp
+L Connector_Generic:Conn_01x02 J6
+U 1 1 5D2BCADA
+P 2950 6500
+F 0 "J6" H 2868 6175 50  0000 C CNN
+F 1 "Conn_01x02" H 2868 6266 50  0000 C CNN
+F 2 "TerminalBlock_MetzConnect:TerminalBlock_MetzConnect_Type055_RT01502HDWU_1x02_P5.00mm_Horizontal" H 2950 6500 50  0001 C CNN
+F 3 "~" H 2950 6500 50  0001 C CNN
+	1    2950 6500
+	-1   0    0    1   
+$EndComp
+Text Label 3150 6400 0    50   ~ 0
+PID_OUT+
+$Comp
+L Transistor_BJT:PN2222A Q1
+U 1 1 5D2D5E31
+P 4450 6800
+F 0 "Q1" H 4640 6846 50  0000 L CNN
+F 1 "PN2222A" H 4640 6755 50  0000 L CNN
+F 2 "Package_TO_SOT_THT:TO-92_Wide" H 4650 6725 50  0001 L CIN
+F 3 "http://www.fairchildsemi.com/ds/PN/PN2222A.pdf" H 4450 6800 50  0001 L CNN
+	1    4450 6800
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0102
+U 1 1 5D2D74B1
+P 4550 6300
+F 0 "#PWR0102" H 4550 6150 50  0001 C CNN
+F 1 "+5V" H 4565 6473 50  0000 C CNN
+F 2 "" H 4550 6300 50  0001 C CNN
+F 3 "" H 4550 6300 50  0001 C CNN
+	1    4550 6300
+	1    0    0    -1  
+$EndComp
+Text Label 4050 6800 0    50   ~ 0
+6(**)
+Wire Wire Line
+	4050 6800 4250 6800
+$Comp
+L power:GND #PWR0103
+U 1 1 5D2DB74C
+P 4550 7100
+F 0 "#PWR0103" H 4550 6850 50  0001 C CNN
+F 1 "GND" H 4555 6927 50  0000 C CNN
+F 2 "" H 4550 7100 50  0001 C CNN
+F 3 "" H 4550 7100 50  0001 C CNN
+	1    4550 7100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4550 7100 4550 7000
+Wire Wire Line
+	3150 6400 4550 6400
+Wire Wire Line
+	4550 6400 4550 6300
+Wire Wire Line
+	3150 6500 4550 6500
+Text Label 3150 6500 0    50   ~ 0
+PID_OUT-
+Wire Wire Line
+	4550 6500 4550 6600
 $EndSCHEMATC
