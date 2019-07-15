@@ -434,7 +434,7 @@
   )
 
   (module "dm_logo:dm_logo" (layer "F.Cu") (tedit 5BC664B4) (tstamp 5D223DE6)
-    (at 192.092677 50.600604 90)
+    (at 219.503077 52.480204 90)
     (path "/5BC24F37")
     (fp_text reference "SYM1" (at 0 -3.81 90) (layer "F.SilkS") hide
       (effects (font (size 1.524 1.524) (thickness 0.3)))
@@ -875,7 +875,7 @@
   )
 
   (module "Symbol:OSHW-Symbol_6.7x6mm_SilkScreen" (layer "F.Cu") (tedit 0) (tstamp 5D223D8F)
-    (at 218.522677 53.176604 90)
+    (at 211.019477 53.547004 90)
     (descr "Open Source Hardware Symbol")
     (tags "Logo Symbol OSHW")
     (path "/5BC28411")
