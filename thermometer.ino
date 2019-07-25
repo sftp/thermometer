@@ -109,8 +109,18 @@ void setup() {
 void loop() {
   ms = millis();
 
+#if DEBUG == 1
+  Serial.print("loop start at ");
+  Serial.println(ms);
+#endif
+
   if (ms > ds18b20_ms + DS18B20_DELAY_MS || ms < ds18b20_ms || !ds18b20_ms) {
     ds18b20_ms = millis();
+
+#if DEBUG == 1
+    Serial.print("ds18b20 task start at ");
+    Serial.println(ds18b20_ms);
+#endif
 
 #if DS18B20_EXT_PIN
     if (ds18b20_ext.getAddress(ds18b20_addr, 0)) {
@@ -133,6 +143,11 @@ void loop() {
   if (ms > adc_ms + ADC_DELAY_MS || ms < adc_ms || !adc_ms) {
     adc_ms = millis();
 
+#if DEBUG == 1
+    Serial.print("adc task start at ");
+    Serial.println(adc_ms);
+#endif
+
     adc = ad7705.readADResultRaw(AD7705_CHN);
 
     ms = millis();
@@ -140,6 +155,11 @@ void loop() {
 
   if (ms > display_ms + DISPLAY_DELAY_MS || ms < display_ms || !display_ms) {
     display_ms = millis();
+
+#if DEBUG == 1
+    Serial.print("display task start at ");
+    Serial.println(display_ms);
+#endif
 
     uint8_t neg[2] = {0, 0};
 
