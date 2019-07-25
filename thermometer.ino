@@ -109,8 +109,6 @@ void setup() {
 void loop() {
   ms = millis();
 
-  uint8_t neg[2] = {0, 0};
-
   if (ms > ds18b20_ms + DS18B20_DELAY_MS || ms < ds18b20_ms || !ds18b20_ms) {
     ds18b20_ms = millis();
 
@@ -138,6 +136,8 @@ void loop() {
 
   if (ms > display_ms + DISPLAY_DELAY_MS || ms < display_ms || !display_ms) {
     display_ms = millis();
+
+    uint8_t neg[2] = {0, 0};
 
     t = find_t(adc) + ds18b20_t;
 
