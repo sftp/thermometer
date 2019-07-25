@@ -28,7 +28,11 @@ OneWire ds18b20_ext_1w(DS18B20_EXT_PIN);
 DallasTemperature ds18b20_ext(&ds18b20_ext_1w);
 #endif
 
-uint32_t ms = 0;
+int32_t ms = 0;
+uint32_t adc_ms = 0;
+uint32_t ds18b20_ms = 0;
+uint32_t display_ms = 0;
+
 uint16_t adc;
 int16_t t;
 int32_t ds18b20_t;
@@ -103,9 +107,13 @@ void setup() {
 }
 
 void loop() {
+  ms = millis();
+
   uint8_t neg[2] = {0, 0};
 
-  if (millis() > ms + DS18B20_DELAY_MS || millis() < ms || !ms) {
+  if (ms > ds18b20_ms + DS18B20_DELAY_MS || ms < ds18b20_ms || !ds18b20_ms) {
+    ds18b20_ms = millis();
+
 #if DS18B20_EXT_PIN
     if (ds18b20_ext.getAddress(ds18b20_addr, 0)) {
       ds18b20_t = (int32_t) ds18b20_ext.getTemp(ds18b20_addr) * 10 / 128;
@@ -120,31 +128,37 @@ void loop() {
     ds18b20_t = (int32_t) ds18b20.getTemp(ds18b20_addr) * 10 / 128;
     ds18b20.requestTemperatures();
 #endif
-    ms = millis();
   }
 
-  adc = ad7705.readADResultRaw(AD7705_CHN);
-  t = find_t(adc) + ds18b20_t;
+  if (ms > adc_ms + ADC_DELAY_MS || ms < adc_ms || !adc_ms) {
+    adc_ms = millis();
 
-  if (t < 0) {
-    neg[0] = DISPLAY_MINUS_SYMB;
-    neg[1] = DISPLAY_MINUS_SYMB;
-    t = -t;
+    adc = ad7705.readADResultRaw(AD7705_CHN);
   }
 
-  if ((t < 10000 && !neg[0]) || t < 1000) {
-    display_data[3] = display.encodeDigit(t % 10);
-    display_data[2] = t >=    1 ? display.encodeDigit((t /   10) % 10) ^ DISPLAY_DOT_SYMB : 0;
-    display_data[1] = t >=  100 ? display.encodeDigit((t /  100) % 10) : 0 ^ (neg[0] = 0, neg[1]);
-    display_data[0] = t >= 1000 ? display.encodeDigit((t / 1000) % 10) : 0 ^ neg[0];
-  } else {
-    display_data[3] = display.encodeDigit((t /    10) % 10);
-    display_data[2] = display.encodeDigit((t /   100) % 10);
-    display_data[1] = t >=  1000 ? display.encodeDigit((t /  1000) % 10) : 0 ^ (neg[0] = 0, neg[1]);
-    display_data[0] = t >= 10000 ? display.encodeDigit((t / 10000) % 10) : 0 ^ neg[0];
+  if (ms > display_ms + DISPLAY_DELAY_MS || ms < display_ms || !display_ms) {
+    display_ms = millis();
+
+    t = find_t(adc) + ds18b20_t;
+
+    if (t < 0) {
+      neg[0] = DISPLAY_MINUS_SYMB;
+      neg[1] = DISPLAY_MINUS_SYMB;
+      t = -t;
+    }
+
+    if ((t < 10000 && !neg[0]) || t < 1000) {
+      display_data[3] = display.encodeDigit(t % 10);
+      display_data[2] = t >=    1 ? display.encodeDigit((t /   10) % 10) ^ DISPLAY_DOT_SYMB : 0;
+      display_data[1] = t >=  100 ? display.encodeDigit((t /  100) % 10) : 0 ^ (neg[0] = 0, neg[1]);
+      display_data[0] = t >= 1000 ? display.encodeDigit((t / 1000) % 10) : 0 ^ neg[0];
+    } else {
+      display_data[3] = display.encodeDigit((t /    10) % 10);
+      display_data[2] = display.encodeDigit((t /   100) % 10);
+      display_data[1] = t >=  1000 ? display.encodeDigit((t /  1000) % 10) : 0 ^ (neg[0] = 0, neg[1]);
+      display_data[0] = t >= 10000 ? display.encodeDigit((t / 10000) % 10) : 0 ^ neg[0];
+    }
+
+    display.setSegments(display_data);
   }
-
-  display.setSegments(display_data);
-
-  delay(CYCLE_DELAY_MS);
 }
