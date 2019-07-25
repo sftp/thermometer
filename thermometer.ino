@@ -126,12 +126,16 @@ void loop() {
     ds18b20_t = (int32_t) ds18b20.getTemp(ds18b20_addr) * 10 / 128;
     ds18b20.requestTemperatures();
 #endif
+
+    ms = millis();
   }
 
   if (ms > adc_ms + ADC_DELAY_MS || ms < adc_ms || !adc_ms) {
     adc_ms = millis();
 
     adc = ad7705.readADResultRaw(AD7705_CHN);
+
+    ms = millis();
   }
 
   if (ms > display_ms + DISPLAY_DELAY_MS || ms < display_ms || !display_ms) {
@@ -160,5 +164,7 @@ void loop() {
     }
 
     display.setSegments(display_data);
+
+    ms = millis();
   }
 }
