@@ -80,7 +80,7 @@ uint16_t find_t(uint16_t x)
 void setup() {
 
 #if DEBUG == 1
-  Serial.begin(9600);
+  Serial.begin(115200);
 #endif
 
   display.setBrightness(DISPLAY_BRTHNSS);
