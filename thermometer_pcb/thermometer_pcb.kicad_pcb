@@ -302,7 +302,7 @@
     (descr "terminal block Metz Connect Type055_RT01502HDWU, 2 pins, pitch 5mm, size 10x8mm^2, drill diamater 1.3mm, pad diameter 2.5mm, see http://www.metz-connect.com/de/system/files/productfiles/Datenblatt_310551_RT015xxHDWU_OFF-022723S.pdf, script-generated using https://github.com/pointhi/kicad-footprint-generator/scripts/TerminalBlock_MetzConnect")
     (tags "THT terminal block Metz Connect Type055_RT01502HDWU pitch 5mm size 10x8mm^2 drill 1.3mm pad 2.5mm")
     (path "/5D2BCADA")
-    (fp_text reference "J6" (at 6.9812 5.2832) (layer "F.SilkS")
+    (fp_text reference "J6" (at 8.429 3.429) (layer "F.SilkS")
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text value "Conn_01x02" (at 2.5 5.06) (layer "F.Fab")
