@@ -843,4 +843,57 @@ Connection ~ 3250 5300
 Wire Wire Line
 	3950 5200 3250 5200
 Connection ~ 3250 5200
+$Comp
+L Connector_Generic:Conn_01x05 J9
+U 1 1 5D6209F8
+P 2000 4650
+F 0 "J9" H 2000 4250 50  0000 C CNN
+F 1 "ENC" H 2000 4350 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical" H 2000 4650 50  0001 C CNN
+F 3 "~" H 2000 4650 50  0001 C CNN
+	1    2000 4650
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2200 4850 2300 4850
+Wire Wire Line
+	2300 4850 2300 4950
+$Comp
+L power:GND #PWR0108
+U 1 1 5D621D21
+P 2300 4950
+F 0 "#PWR0108" H 2300 4700 50  0001 C CNN
+F 1 "GND" H 2300 4800 50  0000 C CNN
+F 2 "" H 2300 4950 50  0000 C CNN
+F 3 "" H 2300 4950 50  0000 C CNN
+	1    2300 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0109
+U 1 1 5D622198
+P 2300 4350
+F 0 "#PWR0109" H 2300 4200 50  0001 C CNN
+F 1 "+5V" H 2315 4523 50  0000 C CNN
+F 2 "" H 2300 4350 50  0001 C CNN
+F 3 "" H 2300 4350 50  0001 C CNN
+	1    2300 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2300 4350 2300 4750
+Wire Wire Line
+	2300 4750 2200 4750
+Wire Wire Line
+	2200 4450 2650 4450
+Wire Wire Line
+	2200 4550 2650 4550
+Wire Wire Line
+	2200 4650 2650 4650
+Text Label 2650 4450 2    60   ~ 0
+2
+Text Label 2650 4550 2    60   ~ 0
+3(**)
+Text Label 2650 4650 2    60   ~ 0
+A1
 $EndSCHEMATC
