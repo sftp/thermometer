@@ -347,9 +347,9 @@ Text Label 5650 5350 0    50   ~ 0
 SENS_EXT_DS2
 Connection ~ 5600 2000
 Text Label 6550 2000 2    60   ~ 0
-2
-Text Label 6550 3750 2    60   ~ 0
 4
+Text Label 6550 3750 2    60   ~ 0
+7
 $Comp
 L Device:R R2
 U 1 1 5B7BC042
@@ -715,4 +715,185 @@ Text Label 3150 6500 0    50   ~ 0
 PID_OUT-
 Wire Wire Line
 	4550 6500 4550 6600
+Wire Wire Line
+	9650 5100 10350 5100
+Wire Wire Line
+	10350 5200 9650 5200
+Text Label 9650 5000 0    60   ~ 0
+13(SCK)
+Wire Wire Line
+	9650 5000 10350 5000
+$Comp
+L Connector_Generic:Conn_01x06 J7
+U 1 1 5D58F9B2
+P 10550 5200
+F 0 "J7" H 10468 4675 50  0000 C CNN
+F 1 "SPI" H 10468 4766 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical" H 10550 5200 50  0001 C CNN
+F 3 "~" H 10550 5200 50  0001 C CNN
+	1    10550 5200
+	1    0    0    1   
+$EndComp
+$Comp
+L power:+5V #PWR0104
+U 1 1 5D590E03
+P 10250 4650
+F 0 "#PWR0104" H 10250 4500 50  0001 C CNN
+F 1 "+5V" H 10265 4823 50  0000 C CNN
+F 2 "" H 10250 4650 50  0001 C CNN
+F 3 "" H 10250 4650 50  0001 C CNN
+	1    10250 4650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10250 5300 10250 4650
+$Comp
+L power:GND #PWR0105
+U 1 1 5D5917A9
+P 10250 5550
+F 0 "#PWR0105" H 10250 5300 50  0001 C CNN
+F 1 "GND" H 10255 5377 50  0000 C CNN
+F 2 "" H 10250 5550 50  0001 C CNN
+F 3 "" H 10250 5550 50  0001 C CNN
+	1    10250 5550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10350 5400 10250 5400
+Wire Wire Line
+	10250 5400 10250 5550
+Text Label 9650 5100 0    60   ~ 0
+12(MISO)
+Text Label 9650 5200 0    60   ~ 0
+11(**/MOSI)
+Wire Wire Line
+	10250 5300 10350 5300
+Text Label 9650 4900 0    60   ~ 0
+A6
+Wire Wire Line
+	10350 4900 9650 4900
+$Comp
+L Transistor_BJT:PN2222A Q2
+U 1 1 5D5B5E90
+P 5800 6850
+F 0 "Q2" H 5990 6896 50  0000 L CNN
+F 1 "PN2222A" H 5990 6805 50  0000 L CNN
+F 2 "Package_TO_SOT_THT:TO-92_Wide" H 6000 6775 50  0001 L CIN
+F 3 "http://www.fairchildsemi.com/ds/PN/PN2222A.pdf" H 5800 6850 50  0001 L CNN
+	1    5800 6850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0106
+U 1 1 5D5B5E91
+P 5900 6250
+F 0 "#PWR0106" H 5900 6100 50  0001 C CNN
+F 1 "+5V" H 5915 6423 50  0000 C CNN
+F 2 "" H 5900 6250 50  0001 C CNN
+F 3 "" H 5900 6250 50  0001 C CNN
+	1    5900 6250
+	1    0    0    -1  
+$EndComp
+Text Label 5400 6850 0    50   ~ 0
+A7
+Wire Wire Line
+	5400 6850 5600 6850
+$Comp
+L power:GND #PWR0107
+U 1 1 5D5B5E92
+P 5900 7150
+F 0 "#PWR0107" H 5900 6900 50  0001 C CNN
+F 1 "GND" H 5905 6977 50  0000 C CNN
+F 2 "" H 5900 7150 50  0001 C CNN
+F 3 "" H 5900 7150 50  0001 C CNN
+	1    5900 7150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5900 7150 5900 7050
+Wire Wire Line
+	5900 6350 5900 6250
+Wire Wire Line
+	5900 6550 5900 6650
+$Comp
+L Device:Buzzer BZ1
+U 1 1 5D5B8871
+P 6000 6450
+F 0 "BZ1" H 6152 6479 50  0000 L CNN
+F 1 "Buzzer" H 6152 6388 50  0000 L CNN
+F 2 "Buzzer_Beeper:Buzzer_12x9.5RM7.6" V 5975 6550 50  0001 C CNN
+F 3 "~" V 5975 6550 50  0001 C CNN
+	1    6000 6450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x04 J8
+U 1 1 5D5C9D9E
+P 4150 5400
+F 0 "J8" H 4150 5000 50  0000 C CNN
+F 1 "I2C" H 4150 5100 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 4150 5400 50  0001 C CNN
+F 3 "~" H 4150 5400 50  0001 C CNN
+	1    4150 5400
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	3250 5300 3950 5300
+Connection ~ 3250 5300
+Wire Wire Line
+	3950 5200 3250 5200
+Connection ~ 3250 5200
+$Comp
+L Connector_Generic:Conn_01x05 J9
+U 1 1 5D6209F8
+P 2000 4650
+F 0 "J9" H 2000 4250 50  0000 C CNN
+F 1 "ENC" H 2000 4350 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical" H 2000 4650 50  0001 C CNN
+F 3 "~" H 2000 4650 50  0001 C CNN
+	1    2000 4650
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2200 4850 2300 4850
+Wire Wire Line
+	2300 4850 2300 4950
+$Comp
+L power:GND #PWR0108
+U 1 1 5D621D21
+P 2300 4950
+F 0 "#PWR0108" H 2300 4700 50  0001 C CNN
+F 1 "GND" H 2300 4800 50  0000 C CNN
+F 2 "" H 2300 4950 50  0000 C CNN
+F 3 "" H 2300 4950 50  0000 C CNN
+	1    2300 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0109
+U 1 1 5D622198
+P 2300 4350
+F 0 "#PWR0109" H 2300 4200 50  0001 C CNN
+F 1 "+5V" H 2315 4523 50  0000 C CNN
+F 2 "" H 2300 4350 50  0001 C CNN
+F 3 "" H 2300 4350 50  0001 C CNN
+	1    2300 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2300 4350 2300 4750
+Wire Wire Line
+	2300 4750 2200 4750
+Wire Wire Line
+	2200 4450 2650 4450
+Wire Wire Line
+	2200 4550 2650 4550
+Wire Wire Line
+	2200 4650 2650 4650
+Text Label 2650 4450 2    60   ~ 0
+2
+Text Label 2650 4550 2    60   ~ 0
+3(**)
+Text Label 2650 4650 2    60   ~ 0
+A1
 $EndSCHEMATC

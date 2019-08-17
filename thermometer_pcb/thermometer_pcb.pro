@@ -1,4 +1,4 @@
-update=Пн 08 июл 2019 03:47:33
+update=Сб 17 авг 2019 21:21:43
 version=1
 last_client=kicad
 [cvpcb]
@@ -36,9 +36,9 @@ MinMicroViaDiameter=0.2
 MinMicroViaDrill=0.09999999999999999
 MinHoleToHole=0.25
 CopperEdgeClearance=0.05
-TrackWidth1=0.45
-ViaDiameter1=1.8
-ViaDrill1=0.768
+TrackWidth1=0.25
+ViaDiameter1=1.3
+ViaDrill1=0.5
 ViaDiameter2=0.7
 ViaDrill2=0.3
 ViaDiameter3=1.8
@@ -239,10 +239,10 @@ Enabled=0
 [pcbnew/Netclasses]
 [pcbnew/Netclasses/Default]
 Name=Default
-Clearance=0.35
-TrackWidth=0.45
-ViaDiameter=1.8
-ViaDrill=0.768
+Clearance=0.3
+TrackWidth=0.25
+ViaDiameter=1.3
+ViaDrill=0.5
 uViaDiameter=0.7
 uViaDrill=0.3
 dPairWidth=0.2
@@ -250,10 +250,10 @@ dPairGap=0.25
 dPairViaGap=0.25
 [pcbnew/Netclasses/1]
 Name=PWR
-Clearance=0.5
-TrackWidth=0.75
-ViaDiameter=1.8
-ViaDrill=0.768
+Clearance=0.4
+TrackWidth=0.35
+ViaDiameter=1.5
+ViaDrill=0.65
 uViaDiameter=0.7
 uViaDrill=0.3
 dPairWidth=0.2
@@ -261,10 +261,10 @@ dPairGap=0.25
 dPairViaGap=0.25
 [pcbnew/Netclasses/2]
 Name=tc
-Clearance=0.5
-TrackWidth=0.75
-ViaDiameter=1.8
-ViaDrill=0.768
+Clearance=0.3
+TrackWidth=0.35
+ViaDiameter=1.5
+ViaDrill=0.65
 uViaDiameter=0.7
 uViaDrill=0.3
 dPairWidth=0.2
