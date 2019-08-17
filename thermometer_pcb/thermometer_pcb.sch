@@ -826,4 +826,21 @@ F 3 "~" V 5975 6550 50  0001 C CNN
 	1    6000 6450
 	1    0    0    -1  
 $EndComp
+$Comp
+L Connector_Generic:Conn_01x04 J8
+U 1 1 5D5C9D9E
+P 4150 5400
+F 0 "J8" H 4150 5000 50  0000 C CNN
+F 1 "I2C" H 4150 5100 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 4150 5400 50  0001 C CNN
+F 3 "~" H 4150 5400 50  0001 C CNN
+	1    4150 5400
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	3250 5300 3950 5300
+Connection ~ 3250 5300
+Wire Wire Line
+	3950 5200 3250 5200
+Connection ~ 3250 5200
 $EndSCHEMATC
