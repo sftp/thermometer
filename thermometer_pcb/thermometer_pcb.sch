@@ -347,9 +347,9 @@ Text Label 5650 5350 0    50   ~ 0
 SENS_EXT_DS2
 Connection ~ 5600 2000
 Text Label 6550 2000 2    60   ~ 0
-2
-Text Label 6550 3750 2    60   ~ 0
 4
+Text Label 6550 3750 2    60   ~ 0
+7
 $Comp
 L Device:R R2
 U 1 1 5B7BC042
