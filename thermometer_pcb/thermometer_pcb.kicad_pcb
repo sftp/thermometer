@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 75)
+    (drawings 76)
     (tracks 438)
     (modules 23)
     (nets 26)
@@ -67,7 +67,7 @@
     (pad_to_mask_clearance 0)
     (solder_mask_min_width 0.25)
     (aux_axis_origin 139.446 106.807)
-    (grid_origin 187.788677 51.398604)
+    (grid_origin 222.205677 44.032604)
     (visible_elements FFFFF77F)
     (pcbplotparams
       (layerselection 0x030f0_ffffffff)
@@ -1574,6 +1574,9 @@
       (net 1 "GND") (zone_connect 2))
   )
 
+  (gr_text "v1" (at 220.427677 45.810604 90) (layer "F.SilkS") (tstamp 5D589A61)
+    (effects (font (size 0.7 0.7) (thickness 0.1)))
+  )
   (gr_text "GND" (at 187.788677 49.366604 45) (layer "F.SilkS") (tstamp 5D59DB8C)
     (effects (font (size 0.7 0.7) (thickness 0.1)) (justify left))
   )
