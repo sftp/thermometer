@@ -8,3 +8,5 @@ fp-info-cache
 *.kicad_pcb-bak
 
 *-cache.lib
+
+*.zip
