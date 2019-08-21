@@ -10,3 +10,7 @@ fp-info-cache
 *-cache.lib
 
 *.zip
+
+*.csv
+*.html
+*.xml
