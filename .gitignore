@@ -4,3 +4,20 @@
 
 *.diff
 *.patch
+
+*.zip
+
+*_pcb/fp-info-cache
+
+*_pcb/*.gbr
+*_pcb/*.drl
+*_pcb/*-drl_map.ps
+
+*_pcb/*.bak
+*_pcb/*.kicad_pcb-bak
+
+*_pcb/*-cache.lib
+
+*_pcb/*.csv
+*_pcb/*.html
+*_pcb/*.xml
