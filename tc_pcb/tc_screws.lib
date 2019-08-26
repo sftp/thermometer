@@ -1,0 +1,24 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# tc_screws
+#
+DEF tc_screws TC 0 40 Y Y 1 F N
+F0 "TC" 0 -300 50 H V C CNN
+F1 "tc_screws" 0 300 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+$FPLIST
+ tc_screws
+$ENDFPLIST
+DRAW
+S -100 -250 -100 250 0 1 0 N
+S -100 250 100 250 0 1 0 N
+S 100 -250 -100 -250 0 1 0 N
+S 100 250 100 -250 0 1 0 N
+X TC- 1 -200 200 100 R 50 50 1 1 P
+X TC+ 2 -200 -200 100 R 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
+#End Library
