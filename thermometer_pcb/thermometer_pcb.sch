@@ -799,7 +799,7 @@ F 3 "" H 5900 6250 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text Label 5400 6850 0    50   ~ 0
-A7
+A2
 Wire Wire Line
 	5400 6850 5600 6850
 $Comp
