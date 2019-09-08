@@ -15,6 +15,7 @@
 *_pcb/*-drl_map.ps
 
 *_pcb/*.bak
+*_pcb/*.sch-bak
 *_pcb/*.kicad_pcb-bak
 
 *_pcb/*-cache.lib
