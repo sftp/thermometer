@@ -773,7 +773,7 @@ Text Label 9650 5200 0    60   ~ 0
 Wire Wire Line
 	10250 5300 10350 5300
 Text Label 9650 4900 0    60   ~ 0
-A6
+A1
 Wire Wire Line
 	10350 4900 9650 4900
 $Comp
