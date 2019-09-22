@@ -180,7 +180,7 @@ void loop() {
     if (setpoint - t > PID_CONS_GAP) {
       pid.SetTunings(PID_K_P, PID_K_I, PID_K_D);
     } else {
-      pid.SetTunings(PID_K_CONS_P, PID_K_CONS_P, PID_K_CONS_P);
+      pid.SetTunings(PID_K_CONS_P, PID_K_CONS_I, PID_K_CONS_D);
     }
 
     pid_in = t;
