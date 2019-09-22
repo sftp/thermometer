@@ -20,8 +20,25 @@
 #define DISPLAY_DOT_SYMB (1<<7)
 #define DISPLAY_MINUS_SYMB (1<<6)
 
+#define ENC_CLK_PIN 2
+#define ENC_DT_PIN 3
+#define ENC_TRANS_PER_CLICK 4
+#define ENC_TRANS_TO_FF 8
+#define ENC_FF_STEP 100
+
+#define PID_PIN 6
+#define PID_K_P 30
+#define PID_K_I 1
+#define PID_K_D 2
+#define PID_CONS_GAP 200
+#define PID_K_CONS_P 10
+#define PID_K_CONS_I 0.25
+#define PID_K_CONS_D 1
+
 #define ADC_DELAY_MS 20
 #define DS18B20_DELAY_MS 1000
 #define DISPLAY_DELAY_MS 100
+#define PID_COMPUTE_DELAY_MS 600
+#define MENU_DELAY_MS 3000
 
 #define DEBUG 0

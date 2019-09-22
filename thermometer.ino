@@ -8,7 +8,10 @@
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <Encoder.h>
+#include <PID_v1.h>
 
+int32_t disp_val;
 uint8_t display_data[] =
   {DISPLAY_MINUS_SYMB ^ DISPLAY_DOT_SYMB,
    DISPLAY_MINUS_SYMB ^ DISPLAY_DOT_SYMB,
@@ -17,6 +20,19 @@ uint8_t display_data[] =
 
 AD770X ad7705(2.5);
 TM1637Display display(DISPLAY_CLK_PIN, DISPLAY_DIO_PIN);
+
+Encoder enc(ENC_CLK_PIN, ENC_DT_PIN);
+int32_t enc_off = 0;
+int32_t enc_pos = 0;
+int32_t enc_pos_new = 0;
+double setpoint = 0;
+
+double Kp;
+double Ki;
+double Kd;
+double pid_in;
+double pid_out;
+PID pid(&pid_in, &pid_out, &setpoint, Kp, Ki, Kd, DIRECT);
 
 DeviceAddress ds18b20_addr;
 
@@ -32,6 +48,8 @@ int32_t ms = 0;
 uint32_t adc_ms = 0;
 uint32_t ds18b20_ms = 0;
 uint32_t display_ms = 0;
+uint32_t enc_ms_act = 0;
+uint32_t pid_compute_ms = 0;
 
 uint16_t adc;
 int16_t t;
@@ -104,6 +122,9 @@ void setup() {
   ds18b20_ext.requestTemperatures();
   ds18b20_ext.setWaitForConversion(false);
 #endif
+
+  pid.SetOutputLimits(0, PID_COMPUTE_DELAY_MS);
+  pid.SetMode(AUTOMATIC);
 }
 
 void loop() {
@@ -153,6 +174,43 @@ void loop() {
     ms = millis();
   }
 
+  if (ms > pid_compute_ms + PID_COMPUTE_DELAY_MS || ms < pid_compute_ms || !pid_compute_ms) {
+    pid_compute_ms = millis();
+
+    if (setpoint - t > PID_CONS_GAP) {
+      pid.SetTunings(PID_K_P, PID_K_I, PID_K_D);
+    } else {
+      pid.SetTunings(PID_K_CONS_P, PID_K_CONS_P, PID_K_CONS_P);
+    }
+
+    pid_in = t;
+    pid.Compute();
+
+    ms = millis();
+  }
+
+  if (ms < pid_compute_ms + pid_out) {
+    digitalWrite(PID_PIN, HIGH);
+  } else {
+    digitalWrite(PID_PIN, LOW);
+  }
+
+  enc_pos_new = enc.read();
+  enc_off = enc_pos_new - enc_pos;
+
+  if (enc_off && enc_off % ENC_TRANS_PER_CLICK == 0) {
+    enc_pos = enc_pos_new;
+    enc_ms_act = millis();
+
+    if (enc_off > ENC_TRANS_TO_FF) {
+      setpoint += ENC_FF_STEP;
+    } else if (enc_off < -ENC_TRANS_TO_FF){
+      setpoint += -ENC_FF_STEP;
+    } else {
+      setpoint += enc_off / ENC_TRANS_PER_CLICK;
+    }
+  }
+
   if (ms > display_ms + DISPLAY_DELAY_MS || ms < display_ms || !display_ms) {
     display_ms = millis();
 
@@ -161,26 +219,31 @@ void loop() {
     Serial.println(display_ms);
 #endif
 
-    uint8_t neg[2] = {0, 0};
-
     t = find_t(adc) + ds18b20_t;
 
-    if (t < 0) {
-      neg[0] = DISPLAY_MINUS_SYMB;
-      neg[1] = DISPLAY_MINUS_SYMB;
-      t = -t;
+    if (enc_ms_act && ms < enc_ms_act + MENU_DELAY_MS) {
+      disp_val = setpoint;
+    } else {
+      disp_val = t;
     }
 
-    if ((t < 10000 && !neg[0]) || t < 1000) {
-      display_data[3] = display.encodeDigit(t % 10);
-      display_data[2] = t >=    1 ? display.encodeDigit((t /   10) % 10) ^ DISPLAY_DOT_SYMB : 0;
-      display_data[1] = t >=  100 ? display.encodeDigit((t /  100) % 10) : 0 ^ (neg[0] = 0, neg[1]);
-      display_data[0] = t >= 1000 ? display.encodeDigit((t / 1000) % 10) : 0 ^ neg[0];
+    uint8_t neg[2] = {0, 0};
+    if (disp_val < 0) {
+      neg[0] = DISPLAY_MINUS_SYMB;
+      neg[1] = DISPLAY_MINUS_SYMB;
+      disp_val = -disp_val;
+    }
+
+    if ((disp_val < 10000 && !neg[0]) || disp_val < 1000) {
+      display_data[3] = display.encodeDigit(disp_val % 10);
+      display_data[2] = disp_val >=    1 ? display.encodeDigit((disp_val /   10) % 10) ^ DISPLAY_DOT_SYMB : 0;
+      display_data[1] = disp_val >=  100 ? display.encodeDigit((disp_val /  100) % 10) : 0 ^ (neg[0] = 0, neg[1]);
+      display_data[0] = disp_val >= 1000 ? display.encodeDigit((disp_val / 1000) % 10) : 0 ^ neg[0];
     } else {
-      display_data[3] = display.encodeDigit((t /    10) % 10);
-      display_data[2] = display.encodeDigit((t /   100) % 10);
-      display_data[1] = t >=  1000 ? display.encodeDigit((t /  1000) % 10) : 0 ^ (neg[0] = 0, neg[1]);
-      display_data[0] = t >= 10000 ? display.encodeDigit((t / 10000) % 10) : 0 ^ neg[0];
+      display_data[3] = display.encodeDigit((disp_val /    10) % 10);
+      display_data[2] = display.encodeDigit((disp_val /   100) % 10);
+      display_data[1] = disp_val >=  1000 ? display.encodeDigit((disp_val /  1000) % 10) : 0 ^ (neg[0] = 0, neg[1]);
+      display_data[0] = disp_val >= 10000 ? display.encodeDigit((disp_val / 10000) % 10) : 0 ^ neg[0];
     }
 
     display.setSegments(display_data);
