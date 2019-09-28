@@ -47,7 +47,7 @@ DallasTemperature ds18b20_ext(&ds18b20_ext_1w);
 
 uint8_t eeprom_need_write = 0;
 
-int32_t ms = 0;
+uint32_t ms = 0;
 uint32_t adc_ms = 0;
 uint32_t ds18b20_ms = 0;
 uint32_t display_ms = 0;
