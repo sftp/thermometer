@@ -1,4 +1,5 @@
 #include <avr/pgmspace.h>
+#include <EEPROM.h>
 
 #include "config.h"
 #include "tc.h"
@@ -25,7 +26,7 @@ Encoder enc(ENC_CLK_PIN, ENC_DT_PIN);
 int32_t enc_off = 0;
 int32_t enc_pos = 0;
 int32_t enc_pos_new = 0;
-double setpoint = 0;
+double setpoint;
 
 double Kp;
 double Ki;
@@ -43,6 +44,8 @@ DallasTemperature ds18b20(&ds18b20_1w);
 OneWire ds18b20_ext_1w(DS18B20_EXT_PIN);
 DallasTemperature ds18b20_ext(&ds18b20_ext_1w);
 #endif
+
+uint8_t eeprom_need_write = 0;
 
 int32_t ms = 0;
 uint32_t adc_ms = 0;
@@ -122,6 +125,8 @@ void setup() {
   ds18b20_ext.requestTemperatures();
   ds18b20_ext.setWaitForConversion(false);
 #endif
+
+  setpoint = ((uint16_t)EEPROM.read(0)<<8) + (uint16_t)EEPROM.read(1);
 
   pid.SetOutputLimits(0, PID_COMPUTE_DELAY_MS);
   pid.SetMode(AUTOMATIC);
@@ -209,6 +214,8 @@ void loop() {
     } else {
       setpoint += enc_off / ENC_TRANS_PER_CLICK;
     }
+
+    eeprom_need_write = 1;
   }
 
   if (ms > display_ms + DISPLAY_DELAY_MS || ms < display_ms || !display_ms) {
@@ -225,6 +232,13 @@ void loop() {
       disp_val = setpoint;
     } else {
       disp_val = t;
+
+      if (eeprom_need_write) {
+        EEPROM.write(0, (uint16_t)setpoint>>8);
+        EEPROM.write(1, (uint8_t)setpoint);
+
+        eeprom_need_write = 0;
+      }
     }
 
     uint8_t neg[2] = {0, 0};
