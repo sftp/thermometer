@@ -29,8 +29,8 @@
 
 #define PID_PIN 6
 #define PID_K_P 30
-#define PID_K_I 1
-#define PID_K_D 2
+#define PID_K_I 0.24
+#define PID_K_D 60
 #define PID_CONS_GAP 200
 #define PID_K_CONS_P 10
 #define PID_K_CONS_I 0.25
