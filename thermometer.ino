@@ -208,11 +208,11 @@ void loop() {
     enc_ms_act = millis();
 
     if (enc_off > ENC_TRANS_TO_FF) {
-      setpoint += ENC_FF_STEP;
+      setpoint += ENC_FF_STEP * ENC_DIRECTION;
     } else if (enc_off < -ENC_TRANS_TO_FF){
-      setpoint += -ENC_FF_STEP;
+      setpoint -= ENC_FF_STEP * ENC_DIRECTION;
     } else {
-      setpoint += enc_off / ENC_TRANS_PER_CLICK;
+      setpoint += enc_off * ENC_DIRECTION / ENC_TRANS_PER_CLICK;
     }
 
     eeprom_need_write = 1;

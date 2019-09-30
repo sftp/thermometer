@@ -23,6 +23,7 @@
 
 #define ENC_CLK_PIN 2
 #define ENC_DT_PIN 3
+#define ENC_DIRECTION 1
 #define ENC_TRANS_PER_CLICK 4
 #define ENC_TRANS_TO_FF 8
 #define ENC_FF_STEP 100
