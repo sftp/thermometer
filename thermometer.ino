@@ -175,6 +175,7 @@ void loop() {
 #endif
 
     adc = ad7705.readADResultRaw(AD7705_CHN);
+    t = find_t(adc) + ds18b20_t;
 
     ms = millis();
   }
@@ -225,8 +226,6 @@ void loop() {
     Serial.print("display task start at ");
     Serial.println(display_ms);
 #endif
-
-    t = find_t(adc) + ds18b20_t;
 
     if (enc_ms_act && ms < enc_ms_act + MENU_DELAY_MS) {
       disp_val = setpoint;
