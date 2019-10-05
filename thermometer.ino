@@ -120,6 +120,7 @@ void setup() {
   setpoint = ((uint16_t)EEPROM.read(0)<<8) + (uint16_t)EEPROM.read(1);
 
   pid.SetOutputLimits(0, PID_COMPUTE_DELAY_MS);
+  pid.SetTunings(PID_K_P, PID_K_I, PID_K_D);
   pid.SetMode(AUTOMATIC);
 }
 
@@ -172,10 +173,12 @@ void loop() {
   if (ms > pid_compute_ms + PID_COMPUTE_DELAY_MS || ms < pid_compute_ms || !pid_compute_ms) {
     pid_compute_ms = ms;
 
-    if (setpoint - t > PID_CONS_GAP) {
-      pid.SetTunings(PID_K_P, PID_K_I, PID_K_D);
-    } else {
-      pid.SetTunings(PID_K_CONS_P, PID_K_CONS_I, PID_K_CONS_D);
+    if (PID_CONS_GAP) {
+      if (setpoint - t > PID_CONS_GAP) {
+        pid.SetTunings(PID_K_P, PID_K_I, PID_K_D);
+      } else {
+        pid.SetTunings(PID_K_CONS_P, PID_K_CONS_I, PID_K_CONS_D);
+      }
     }
 
     pid_in = t;
