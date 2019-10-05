@@ -210,6 +210,8 @@ void loop() {
     }
 
     eeprom_need_write = 1;
+
+    ms = millis();
   }
 
   if (ms > display_ms + DISPLAY_DELAY_MS || ms < display_ms || !display_ms) {
