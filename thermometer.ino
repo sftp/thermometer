@@ -134,7 +134,7 @@ void loop() {
 #endif
 
   if (ms > ds18b20_ms + DS18B20_DELAY_MS || ms < ds18b20_ms || !ds18b20_ms) {
-    ds18b20_ms = millis();
+    ds18b20_ms = ms;
 
 #if DEBUG == 1
     Serial.print("ds18b20 task start at ");
@@ -159,7 +159,7 @@ void loop() {
 
   ms = millis();
   if (ms > adc_ms + ADC_DELAY_MS || ms < adc_ms || !adc_ms) {
-    adc_ms = millis();
+    adc_ms = ms;
 
 #if DEBUG == 1
     Serial.print("adc task start at ");
@@ -172,7 +172,7 @@ void loop() {
 
   ms = millis();
   if (ms > pid_compute_ms + PID_COMPUTE_DELAY_MS || ms < pid_compute_ms || !pid_compute_ms) {
-    pid_compute_ms = millis();
+    pid_compute_ms = ms;
 
     if (setpoint - t > PID_CONS_GAP) {
       pid.SetTunings(PID_K_P, PID_K_I, PID_K_D);
@@ -211,7 +211,7 @@ void loop() {
 
   ms = millis();
   if (ms > display_ms + DISPLAY_DELAY_MS || ms < display_ms || !display_ms) {
-    display_ms = millis();
+    display_ms = ms;
 
 #if DEBUG == 1
     Serial.print("display task start at ");
