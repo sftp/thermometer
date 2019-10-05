@@ -12,8 +12,6 @@
 #include <Encoder.h>
 #include <PID_v1.h>
 
-int32_t disp_val;
-
 AD770X ad7705(AD7705_VREF);
 
 Encoder enc(ENC_CLK_PIN, ENC_DT_PIN);
@@ -219,11 +217,9 @@ void loop() {
 #endif
 
     if (enc_ms_act && ms < enc_ms_act + MENU_DELAY_MS) {
-      disp_val = setpoint;
-      display_int_signed(disp_val/10);
+      display_int_signed(setpoint / 10);
     } else {
-      disp_val = t;
-      display_tenth_signed(disp_val);
+      display_tenth_signed(t);
 
       if (eeprom_need_write) {
         EEPROM.write(0, (uint16_t)setpoint>>8);
