@@ -18,8 +18,6 @@
 #define DISPLAY_CLK_PIN A5
 #define DISPLAY_DIO_PIN A4
 #define DISPLAY_BRTHNSS 0xC
-#define DISPLAY_DOT_SYMB (1<<7)
-#define DISPLAY_MINUS_SYMB (1<<6)
 
 #define ENC_CLK_PIN 2
 #define ENC_DT_PIN 3

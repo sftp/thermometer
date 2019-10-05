@@ -2,9 +2,9 @@
 #include <EEPROM.h>
 
 #include "config.h"
+#include "display.h"
 #include "tc.h"
 
-#include <TM1637Display.h>
 #include <AD770X.h>
 
 #include <OneWire.h>
@@ -13,14 +13,8 @@
 #include <PID_v1.h>
 
 int32_t disp_val;
-uint8_t display_data[] =
-  {DISPLAY_MINUS_SYMB ^ DISPLAY_DOT_SYMB,
-   DISPLAY_MINUS_SYMB ^ DISPLAY_DOT_SYMB,
-   DISPLAY_MINUS_SYMB ^ DISPLAY_DOT_SYMB,
-   DISPLAY_MINUS_SYMB ^ DISPLAY_DOT_SYMB};
 
 AD770X ad7705(AD7705_VREF);
-TM1637Display display(DISPLAY_CLK_PIN, DISPLAY_DIO_PIN);
 
 Encoder enc(ENC_CLK_PIN, ENC_DT_PIN);
 int32_t enc_off = 0;
@@ -105,7 +99,7 @@ void setup() {
 #endif
 
   display.setBrightness(DISPLAY_BRTHNSS);
-  display.setSegments(display_data);
+  display.setSegments(display_buf);
 
   ad7705.reset();
   ad7705.init(AD7705_CHN,
@@ -240,26 +234,7 @@ void loop() {
       }
     }
 
-    uint8_t neg[2] = {0, 0};
-    if (disp_val < 0) {
-      neg[0] = DISPLAY_MINUS_SYMB;
-      neg[1] = DISPLAY_MINUS_SYMB;
-      disp_val = -disp_val;
-    }
-
-    if ((disp_val < 10000 && !neg[0]) || disp_val < 1000) {
-      display_data[3] = display.encodeDigit(disp_val % 10);
-      display_data[2] = disp_val >=    1 ? display.encodeDigit((disp_val /   10) % 10) ^ DISPLAY_DOT_SYMB : 0;
-      display_data[1] = disp_val >=  100 ? display.encodeDigit((disp_val /  100) % 10) : 0 ^ (neg[0] = 0, neg[1]);
-      display_data[0] = disp_val >= 1000 ? display.encodeDigit((disp_val / 1000) % 10) : 0 ^ neg[0];
-    } else {
-      display_data[3] = display.encodeDigit((disp_val /    10) % 10);
-      display_data[2] = display.encodeDigit((disp_val /   100) % 10);
-      display_data[1] = disp_val >=  1000 ? display.encodeDigit((disp_val /  1000) % 10) : 0 ^ (neg[0] = 0, neg[1]);
-      display_data[0] = disp_val >= 10000 ? display.encodeDigit((disp_val / 10000) % 10) : 0 ^ neg[0];
-    }
-
-    display.setSegments(display_data);
+    display_tenth_signed(disp_val);
 
     ms = millis();
   }
