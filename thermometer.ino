@@ -199,11 +199,11 @@ void loop() {
     enc_ms_act = millis();
 
     if (enc_off > ENC_TRANS_TO_FF) {
-      setpoint += ENC_FF_STEP * ENC_DIRECTION;
+      setpoint += ENC_FF_STEP * ENC_DIRECTION * 10;
     } else if (enc_off < -ENC_TRANS_TO_FF){
-      setpoint -= ENC_FF_STEP * ENC_DIRECTION;
+      setpoint -= ENC_FF_STEP * ENC_DIRECTION * 10;
     } else {
-      setpoint += enc_off * ENC_DIRECTION / ENC_TRANS_PER_CLICK;
+      setpoint += enc_off * ENC_DIRECTION * 10 / ENC_TRANS_PER_CLICK;
     }
 
     eeprom_need_write = 1;
@@ -220,8 +220,10 @@ void loop() {
 
     if (enc_ms_act && ms < enc_ms_act + MENU_DELAY_MS) {
       disp_val = setpoint;
+      display_int_signed(disp_val/10);
     } else {
       disp_val = t;
+      display_tenth_signed(disp_val);
 
       if (eeprom_need_write) {
         EEPROM.write(0, (uint16_t)setpoint>>8);
@@ -230,7 +232,5 @@ void loop() {
         eeprom_need_write = 0;
       }
     }
-
-    display_tenth_signed(disp_val);
   }
 }

@@ -40,3 +40,8 @@ void display_tenth_signed (int16_t val)
 
   display.setSegments(display_buf);
 }
+
+void display_int_signed (int16_t val)
+{
+  display.showNumberDec(val);
+}
