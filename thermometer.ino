@@ -126,13 +126,12 @@ void setup() {
 }
 
 void loop() {
-  ms = millis();
-
 #if DEBUG == 1
   Serial.print("loop start at ");
   Serial.println(ms);
 #endif
 
+  ms = millis();
   if (ms > ds18b20_ms + DS18B20_DELAY_MS || ms < ds18b20_ms || !ds18b20_ms) {
     ds18b20_ms = millis();
 
@@ -155,10 +154,9 @@ void loop() {
     ds18b20_t = (int32_t) ds18b20.getTemp(ds18b20_addr) * 10 / 128;
     ds18b20.requestTemperatures();
 #endif
-
-    ms = millis();
   }
 
+  ms = millis();
   if (ms > adc_ms + ADC_DELAY_MS || ms < adc_ms || !adc_ms) {
     adc_ms = millis();
 
@@ -169,10 +167,9 @@ void loop() {
 
     adc = ad7705.readADResultRaw(AD7705_CHN);
     t = find_t(adc) + ds18b20_t;
-
-    ms = millis();
   }
 
+  ms = millis();
   if (ms > pid_compute_ms + PID_COMPUTE_DELAY_MS || ms < pid_compute_ms || !pid_compute_ms) {
     pid_compute_ms = millis();
 
@@ -184,10 +181,9 @@ void loop() {
 
     pid_in = t;
     pid.Compute();
-
-    ms = millis();
   }
 
+  ms = millis();
   if (ms < pid_compute_ms + pid_out) {
     digitalWrite(PID_PIN, HIGH);
   } else {
@@ -210,10 +206,9 @@ void loop() {
     }
 
     eeprom_need_write = 1;
-
-    ms = millis();
   }
 
+  ms = millis();
   if (ms > display_ms + DISPLAY_DELAY_MS || ms < display_ms || !display_ms) {
     display_ms = millis();
 
@@ -236,7 +231,5 @@ void loop() {
     }
 
     display_tenth_signed(disp_val);
-
-    ms = millis();
   }
 }
