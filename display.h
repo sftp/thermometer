@@ -10,6 +10,12 @@ uint8_t display_buf[] =
    DISPLAY_MINUS_SYMB ^ DISPLAY_DOT_SYMB,
    DISPLAY_MINUS_SYMB ^ DISPLAY_DOT_SYMB};
 
+void display_init (void)
+{
+  display.setBrightness(DISPLAY_BRTHNSS);
+  display.setSegments(display_buf);
+}
+
 void display_tenth_signed (int16_t val)
 {
   uint8_t neg[2] = {0, 0};

@@ -98,8 +98,7 @@ void setup() {
   Serial.begin(115200);
 #endif
 
-  display.setBrightness(DISPLAY_BRTHNSS);
-  display.setSegments(display_buf);
+  display_init();
 
   ad7705.reset();
   ad7705.init(AD7705_CHN,
