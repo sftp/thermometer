@@ -19,12 +19,15 @@
 #define DISPLAY_DIO_PIN A4
 #define DISPLAY_BRTHNSS 0xC
 
+#define ENC_SW_PIN A0
 #define ENC_CLK_PIN 2
 #define ENC_DT_PIN 3
 #define ENC_DIRECTION -1
 #define ENC_TRANS_PER_CLICK 4
 #define ENC_TRANS_TO_FF 8
 #define ENC_FF_STEP 100
+#define ENC_SW_PRESS_SHORT 100
+#define ENC_SW_PRESS_LONG 1000
 
 #define PID_PIN 6
 #define PID_K_P 30
