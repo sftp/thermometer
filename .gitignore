@@ -21,6 +21,7 @@
 *_pcb/*-cache.lib
 *_pcb/*_pcb-rescue.dcm
 *_pcb/*_pcb-rescue.lib
+*_pcb/sym-lib-table
 
 *_pcb/*.csv
 *_pcb/*.html
