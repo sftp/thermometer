@@ -19,7 +19,11 @@
 *_pcb/*.kicad_pcb-bak
 
 *_pcb/*-cache.lib
+*_pcb/*_pcb-rescue.dcm
+*_pcb/*_pcb-rescue.lib
 
 *_pcb/*.csv
 *_pcb/*.html
+*_pcb/*.step
+*_pcb/*.wrl
 *_pcb/*.xml
