@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include "display.h"
+#include "menu.h"
 #include "tc.h"
 
 #include <AD770X.h>
@@ -152,22 +153,60 @@ void loop() {
     digitalWrite(PID_PIN, LOW);
   }
 
-  enc_pos_new = enc.read();
-  enc_off = enc_pos_new - enc_pos;
+  /* switch pressed */
+  if (enc_sw_prev == 1 && digitalRead(ENC_SW_PIN) == 0) {
+    enc_sw_start_ms = millis();
+    enc_sw_prev = 0;
+  }
 
-  if (enc_off && enc_off % ENC_TRANS_PER_CLICK == 0) {
-    enc_pos = enc_pos_new;
-    enc_ms_act = millis();
+  /* switch released */
+  if (enc_sw_prev == 0 && digitalRead(ENC_SW_PIN) == 1) {
+    enc_sw_prev = 1;
+    if (millis() > enc_sw_start_ms + ENC_SW_PRESS_LONG) {
+      Serial.println("long");
+      sw_long = 1;
+    } else if (millis() > enc_sw_start_ms + ENC_SW_PRESS_SHORT) {
+      Serial.println("short");
+      sw_short = 1;
+    }
+  }
 
-    if (enc_off > ENC_TRANS_TO_FF) {
-      setpoint += ENC_FF_STEP * ENC_DIRECTION * 10;
-    } else if (enc_off < -ENC_TRANS_TO_FF){
-      setpoint -= ENC_FF_STEP * ENC_DIRECTION * 10;
-    } else {
-      setpoint += enc_off * ENC_DIRECTION * 10 / ENC_TRANS_PER_CLICK;
+  if (curr_screen == MENU_SCREEN_MAIN) {
+    if (sw_short) {
+      sw_short = 0;
+      curr_screen = MENU_SCREEN_SETPOINT;
+      enc_pos = enc.read();
+      enc_ms_act = millis();
+    }
+  } else if (curr_screen == MENU_SCREEN_SETPOINT) {
+    enc_pos_new = enc.read();
+    enc_off = enc_pos_new - enc_pos;
+
+    if (enc_off && enc_off % ENC_TRANS_PER_CLICK == 0) {
+      enc_pos = enc_pos_new;
+      enc_ms_act = millis();
+
+      if (enc_off > ENC_TRANS_TO_FF) {
+        setpoint += ENC_FF_STEP * ENC_DIRECTION * 10;
+      } else if (enc_off < -ENC_TRANS_TO_FF){
+        setpoint -= ENC_FF_STEP * ENC_DIRECTION * 10;
+      } else {
+        setpoint += enc_off * ENC_DIRECTION * 10 / ENC_TRANS_PER_CLICK;
+      }
+
+      eeprom_need_write = 1;
     }
 
-    eeprom_need_write = 1;
+    display_int_signed(setpoint / 10);
+
+    if (sw_short) {
+      sw_short = 0;
+      curr_screen = MENU_SCREEN_MAIN;
+    }
+
+    if (enc_ms_act && millis() > enc_ms_act + MENU_DELAY_MS) {
+      curr_screen = MENU_SCREEN_MAIN;
+    }
   }
 
   ms = millis();
@@ -179,9 +218,7 @@ void loop() {
     Serial.println(display_ms);
 #endif
 
-    if (enc_ms_act && ms < enc_ms_act + MENU_DELAY_MS) {
-      display_int_signed(setpoint / 10);
-    } else {
+    if (curr_screen == MENU_SCREEN_MAIN) {
       display_tenth_signed(t);
 
       if (eeprom_need_write) {
