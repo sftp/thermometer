@@ -415,6 +415,7 @@
   )
 
 
+
   (wire (pts (xy 87.63 63.5) (xy 87.63 66.04))
     (stroke (width 0) (type solid) (color 0 0 0 0))
   )
@@ -485,13 +486,10 @@
     (stroke (width 0) (type solid) (color 0 0 0 0))
   )
 
-  (label "GND" (at 87.63 64.77 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-  )
   (label "TC-" (at 99.06 92.71 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
   )
-  (label "+5v" (at 99.06 95.25 0)
+  (label "+5V" (at 99.06 95.25 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
   )
   (label "DQ" (at 99.06 97.79 0)
@@ -501,9 +499,6 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
   )
   (label "TC+" (at 99.06 102.87 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-  )
-  (label "+5v" (at 102.87 66.04 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
   )
 
