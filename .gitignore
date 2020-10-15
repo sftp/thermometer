@@ -18,6 +18,7 @@
 *_pcb/*.bak
 *_pcb/*.sch-bak
 *_pcb/*.kicad_pcb-bak
+*_pcb/_autosave-*
 
 *_pcb/*-cache.lib
 *_pcb/*_pcb-rescue.dcm
