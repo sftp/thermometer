@@ -26,6 +26,7 @@
 *_pcb/sym-lib-table
 
 *_pcb/*.csv
+*_pcb/*.dxf
 *_pcb/*.html
 *_pcb/*.step
 *_pcb/*.wrl
